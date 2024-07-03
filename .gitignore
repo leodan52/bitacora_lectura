@@ -1,0 +1,11 @@
+# Files
+
+pruebas.ipynb
+settings.json
+*.sh
+
+# Directories
+
+data
+__pycache__
+.vscode
