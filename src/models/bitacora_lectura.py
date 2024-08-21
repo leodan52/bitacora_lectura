@@ -14,7 +14,7 @@ class Registro:
 
 	def __init__(self, titulo_obra, ultimo_leido, fecha_hora):
 		self._titulo = titulo_obra
-		self._ultimo_leido = ultimo_leido
+		self._ultimo_leido = float(ultimo_leido)
 		self._fecha = fecha_hora
 		self._info_adicional = None
 
@@ -75,7 +75,7 @@ class Registro:
 		ultimo = match_.group(1)
 		info = match_.group(2)
 
-		instancia = cls(titulo, ultimo, fecha)
+		instancia = cls(titulo, float(ultimo), fecha)
 
 		if info:
 			instancia.info_adicional = info
