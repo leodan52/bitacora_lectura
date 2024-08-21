@@ -3,9 +3,12 @@
 pruebas.ipynb
 settings.json
 *.sh
+*.spec
 
 # Directories
 
 data
 __pycache__
 .vscode
+build
+dist
