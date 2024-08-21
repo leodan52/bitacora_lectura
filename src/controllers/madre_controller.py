@@ -18,19 +18,25 @@ class VentanaMadre(QMainWindow, Ui_MainWindow):
 	def __init__(self, *args, **kwargs):
 		QMainWindow.__init__(self, *args)
 		self.setupUi(self)
+		self._cwd = os.getcwd()
 
-		self._ruta_ajustes = './settings.json'
+		self._ruta_ajustes = os.path.join(self._cwd, 'settings.json')
 		self._ajustes = Ajustes(self._ruta_ajustes)
 		self._ajustes.cargar_ajustes()
 
 		try:
 			self._ruta_db = self._ajustes['ruta_db']
 		except KeyError:
-			self._ruta_db = './data/db.json'
+			self._ruta_db = os.path.join(self._cwd, 'data/db.json')
 			self._ajustes['ruta_db'] = self._ruta_db
 
 		if not os.path.isdir(os.path.dirname(self._ruta_db)):
-			os.mkdir(os.path.dirname(self._ruta_db))
+			try:
+				os.mkdir(os.path.dirname(self._ruta_db))
+			except (FileNotFoundError, PermissionError):
+				self._ruta_db = os.path.join(self._cwd, 'data/db.json')
+				self._ajustes['ruta_db'] = self._ruta_db
+				os.mkdir(os.path.dirname(self._ruta_db))
 
 		self._patron = ''
 		self._lista_versiones = []
@@ -101,11 +107,13 @@ class VentanaMadre(QMainWindow, Ui_MainWindow):
 			fecha = t.fecha.strftime(r'%Y-%m-%d')
 			hora = t.fecha.strftime(r'%H:%M')
 			ultimo = t.ultimo_leido
+			info = t.info_adicional
 
 			self.tableWidget.setItem(n, 0, QTableWidgetItem(titulo))
 			self.tableWidget.setItem(n, 1, QTableWidgetItem(fecha))
 			self.tableWidget.setItem(n, 2, QTableWidgetItem(f'{hora}hrs'))
 			self.tableWidget.setItem(n, 3, QTableWidgetItem(str(ultimo)))
+			self.tableWidget.setItem(n, 4, QTableWidgetItem(str(info)))
 
 			self._registrosTabulados.append(t)
 
@@ -214,6 +222,7 @@ class VentanaMadre(QMainWindow, Ui_MainWindow):
 			return
 
 		self._bitacora.leer_archivoTXT(archivo)
+		self._actualizar_completador()
 		self._ajustes['ruta_importarTXT'] = archivo
 
 	def _actualizar_base(self):

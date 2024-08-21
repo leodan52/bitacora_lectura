@@ -16,13 +16,15 @@ class Registro:
 		self._titulo = titulo_obra
 		self._ultimo_leido = ultimo_leido
 		self._fecha = fecha_hora
+		self._info_adicional = None
 
 	def __eq__(self, other):
 		titulo_comparar = (self._titulo) == (other._titulo)
 		ultimo_comparar = (self._ultimo_leido) == (other._ultimo_leido)
 		fecha_comparar = (self._fecha) == (other._fecha)
+		info_comparar = (self._info_adicional) == (other._info_adicional)
 
-		return titulo_comparar and ultimo_comparar and fecha_comparar
+		return titulo_comparar and ultimo_comparar and fecha_comparar and info_comparar
 
 	@property
 	def titulo(self):
@@ -40,15 +42,28 @@ class Registro:
 	def fecha(self):
 		return self._fecha
 
+	@property
+	def info_adicional(self):
+		return self._info_adicional
+
+	@info_adicional.setter
+	def info_adicional(self, info):
+		self._info_adicional = info
+
 	def __repr__(self):
 		fecha_cadena = self._fecha.strftime(self._fecha_formato)
 
-		return f'{fecha_cadena} :\n\t{self._titulo}\n\t\tÚltimo leído: {self._ultimo_leido}'
+		if self._info_adicional:
+			info = f" ({self._info_adicional})"
+		else:
+			info = ""
+
+		return f'{fecha_cadena} :\n\t{self._titulo}\n\t\tÚltimo leído: {self._ultimo_leido}' + info
 
 	@classmethod
 	def strfregistro(cls, cadena):
 		pattern_fecha = r'\d{4}(-\d{2}){2} \d{2}(:\d{2}){2}'
-		pattern_ultimo = r'Último leído: (\d+)'
+		pattern_ultimo = r'Último leído: (\d+(?:\.\d+)?)(?:\s\((.*)\))?'
 
 		lineas = cadena.strip().split('\n')
 		lineas = list(map(lambda x: x.strip(), lineas))
@@ -56,9 +71,16 @@ class Registro:
 
 		fecha = datetime.strptime(fecha_cadena, cls._fecha_formato)
 		titulo = lineas[1]
-		ultimo = re.match(pattern_ultimo, lineas[2])[1]
+		match_ = re.match(pattern_ultimo, lineas[2])
+		ultimo = match_.group(1)
+		info = match_.group(2)
 
-		return cls(titulo, ultimo, fecha)
+		instancia = cls(titulo, ultimo, fecha)
+
+		if info:
+			instancia.info_adicional = info
+
+		return instancia
 
 
 class Bitacora:
@@ -82,6 +104,11 @@ class Bitacora:
 		for data in data_json:
 			registro = Registro(data['titulo'], data['ultimo'], datetime.fromisoformat(data['datetime']))
 
+			try:
+				registro.info_adicional = data['info_adicional']
+			except KeyError:
+				pass
+
 			if registro not in self._lista:
 				self._lista.append(registro)
 
@@ -97,7 +124,8 @@ class Bitacora:
 		data_json = map(lambda x: {
 			'titulo': x.titulo,
 			'ultimo' : x.ultimo_leido,
-			'datetime' : x.fecha.isoformat()
+			'datetime' : x.fecha.isoformat(),
+			'info_adicional' : x.info_adicional
 		}, self._lista)
 
 		self._db.escribir_json(list(data_json))
@@ -157,8 +185,11 @@ class Bitacora:
 		else:
 			print('El registro ya se encuentra en la bitácora')
 
-	def agregar(self, titulo_obra, ultimo_leido, fecha_hora):
+	def agregar(self, titulo_obra, ultimo_leido, fecha_hora, info_adicional=None):
 		registro = Registro(titulo_obra, ultimo_leido, fecha_hora)
+
+		if info_adicional:
+			registro.info_adicional = info_adicional
 
 		self.agregar_registro(registro)
 

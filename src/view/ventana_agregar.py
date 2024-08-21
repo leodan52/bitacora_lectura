@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_VentanaAgregar(object):
     def setupUi(self, VentanaAgregar):
         VentanaAgregar.setObjectName("VentanaAgregar")
-        VentanaAgregar.resize(802, 217)
+        VentanaAgregar.resize(802, 244)
         self.verticalLayout = QtWidgets.QVBoxLayout(VentanaAgregar)
         self.verticalLayout.setObjectName("verticalLayout")
         self.frame = QtWidgets.QFrame(VentanaAgregar)
@@ -29,9 +29,6 @@ class Ui_VentanaAgregar(object):
         self.cuadroAddUltimo = QtWidgets.QLineEdit(self.frame)
         self.cuadroAddUltimo.setObjectName("cuadroAddUltimo")
         self.gridLayout.addWidget(self.cuadroAddUltimo, 2, 1, 1, 1)
-        self.cuadroAddTitulo = QtWidgets.QLineEdit(self.frame)
-        self.cuadroAddTitulo.setObjectName("cuadroAddTitulo")
-        self.gridLayout.addWidget(self.cuadroAddTitulo, 1, 1, 1, 1)
         self.label = QtWidgets.QLabel(self.frame)
         self.label.setObjectName("label")
         self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
@@ -43,6 +40,15 @@ class Ui_VentanaAgregar(object):
         self.label_3.setSizePolicy(sizePolicy)
         self.label_3.setObjectName("label_3")
         self.gridLayout.addWidget(self.label_3, 0, 0, 1, 2)
+        self.cuadroAddTitulo = QtWidgets.QLineEdit(self.frame)
+        self.cuadroAddTitulo.setObjectName("cuadroAddTitulo")
+        self.gridLayout.addWidget(self.cuadroAddTitulo, 1, 1, 1, 1)
+        self.label_4 = QtWidgets.QLabel(self.frame)
+        self.label_4.setObjectName("label_4")
+        self.gridLayout.addWidget(self.label_4, 3, 0, 1, 1)
+        self.cuadroInfoAdicional = QtWidgets.QLineEdit(self.frame)
+        self.cuadroInfoAdicional.setObjectName("cuadroInfoAdicional")
+        self.gridLayout.addWidget(self.cuadroInfoAdicional, 3, 1, 1, 1)
         self.verticalLayout.addWidget(self.frame)
         self.buttonBox = QtWidgets.QDialogButtonBox(VentanaAgregar)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
@@ -51,6 +57,7 @@ class Ui_VentanaAgregar(object):
         self.verticalLayout.addWidget(self.buttonBox)
         self.label_2.setBuddy(self.cuadroAddUltimo)
         self.label.setBuddy(self.cuadroAddTitulo)
+        self.label_4.setBuddy(self.cuadroInfoAdicional)
 
         self.retranslateUi(VentanaAgregar)
         self.buttonBox.accepted.connect(VentanaAgregar.accept)
@@ -63,6 +70,7 @@ class Ui_VentanaAgregar(object):
         self.label_2.setText(_translate("VentanaAgregar", "¿Cuál fue el último capítulo leído?"))
         self.label.setText(_translate("VentanaAgregar", "Ingrese el título de la obra: "))
         self.label_3.setText(_translate("VentanaAgregar", "<html><head/><body><p><span style=\" font-size:12pt;\">Ingrese los datos a continuación:</span></p></body></html>"))
+        self.label_4.setText(_translate("VentanaAgregar", "Información adicional:"))
 
 
 if __name__ == "__main__":

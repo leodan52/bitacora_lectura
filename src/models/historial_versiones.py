@@ -60,7 +60,7 @@ class HistorialVersiones:
 		new_content = self._db.leer_json()
 		mas_reciente = self.leer_archivo_version(self.obtener_version_mas_reciente())
 
-		if (new_content == mas_reciente) and (mas_reciente):
+		if ((new_content == mas_reciente) or not (mas_reciente)) and self._lista_versiones_anteriores:
 			return
 
 		nuevaruta = self._crear_ruta_archivo()

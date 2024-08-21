@@ -34,9 +34,9 @@ class FileDataBase:
 			return []
 
 	def escribir_json(self, new_object):
-		print("Este el del tipo {type(new_object)}")
 		with open(self._rutaBase, 'w', encoding = 'utf-8') as salida:
 			json.dump(new_object, salida, indent = 4, ensure_ascii = False)
+
 
 	@staticmethod
 	def leer_archivo_txt(ruta):
@@ -44,7 +44,7 @@ class FileDataBase:
 		return db_tmp.leer_txt()
 
 	@staticmethod
-	def escribir_archivo_json(content, ruta):
+	def escribir_archivo_txt(content, ruta):
 		db_tmp = FileDataBase(ruta)
 		db_tmp.escribir_txt(content)
 

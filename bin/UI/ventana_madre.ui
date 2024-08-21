@@ -125,7 +125,7 @@
        <number>1</number>
       </property>
       <property name="columnCount">
-       <number>4</number>
+       <number>5</number>
       </property>
       <attribute name="horizontalHeaderVisible">
        <bool>true</bool>
@@ -158,6 +158,11 @@
       <column>
        <property name="text">
         <string>Último leído</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Información adicional</string>
        </property>
       </column>
       <item row="0" column="0">

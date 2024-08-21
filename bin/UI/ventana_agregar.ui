@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>802</width>
-    <height>217</height>
+    <height>244</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,9 +39,6 @@
       <item row="2" column="1">
        <widget class="QLineEdit" name="cuadroAddUltimo"/>
       </item>
-      <item row="1" column="1">
-       <widget class="QLineEdit" name="cuadroAddTitulo"/>
-      </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label">
         <property name="text">
@@ -68,6 +65,22 @@
         </property>
        </widget>
       </item>
+      <item row="1" column="1">
+       <widget class="QLineEdit" name="cuadroAddTitulo"/>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Información adicional:</string>
+        </property>
+        <property name="buddy">
+         <cstring>cuadroInfoAdicional</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLineEdit" name="cuadroInfoAdicional"/>
+      </item>
      </layout>
     </widget>
    </item>
@@ -92,12 +105,12 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
-     <y>274</y>
+     <y>243</y>
     </hint>
    </hints>
   </connection>
@@ -108,12 +121,12 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>
-     <y>274</y>
+     <y>243</y>
     </hint>
    </hints>
   </connection>
